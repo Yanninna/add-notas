@@ -1,9 +1,10 @@
  const express = require('express');
  const path = require('path');
  const exphbs = require('express-handlebars');
+ const Handlebars = require('handlebars')
  const methodOverride = require('method-override');
  const session = require('express-session');
-
+ const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
  //initiliazations 
  const app = express();
@@ -17,6 +18,7 @@
  app.engine('.hbs', exphbs({
      //se crea una especie de plantilla para el marco 
      defaultLayout:"main",
+     handlebars: allowInsecurePrototypeAccess(Handlebars),
      layoutsDir: path.join(app.get('views'), 'layouts'),
      partialsDir: path.join(app.get('views'), 'partials'),
      extname: '.hbs'
