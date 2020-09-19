@@ -7,11 +7,13 @@
 
  //initiliazations 
  const app = express();
+
  require('./database');
  //settings index.js
  app.set('port', process.env.PORT || 3000);
  //aqui le digo con dirname que me concatene con la carpeta views
  app.set('views', path.join(__dirname, 'views'));
+ 
  app.engine('.hbs', exphbs({
      //se crea una especie de plantilla para el marco 
      defaultLayout:"main",
