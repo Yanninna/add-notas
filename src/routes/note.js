@@ -34,9 +34,24 @@ res.render('notes/new-note');
     } else {
         const newNote = new Note({title,description});
         await newNote.save();
-        console.log("nota creada");
+        req.flash('success_msg',  'Se creo la nota con exito');
         res.redirect('/notes');
     }
+});
+router.get('/notes/edit/:id', async (req, res) => {
+  const note =  await Note.findById(req.params.id);
+res.render('notes/edit-note', {note})
+});
+router.put('/notes/edit-note/:id', async (req, res) => {
+    const {title, description}= req.body;
+  await Note.findByIdAndUpdate(req.params.id, {title, description});
+  req.flash('success_msg', 'La Nota Se Actualizo Con Exito');
+  res.redirect('/notes');
+});
+router.delete('/notes/delete/:id', async (req, res) => {
+   await Note.findOneAndDelete(req.params.id);
+   req.flash('success_msg', 'La Nota Se Elimino Con Exito');
+ res.redirect('/notes');
 });
 // router.get('/notes', async (req, res) => {
    

@@ -4,8 +4,9 @@
  const Handlebars = require('handlebars')
  const methodOverride = require('method-override');
  const session = require('express-session');
+ const flash = require('connect-flash');
  const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
-
+  
  //initiliazations 
  const app = express();
 
@@ -35,14 +36,13 @@ resave: true,
 saveUninitialized: true
 //aqui guardo los datos de el usuario
 }));
-
-
-
-
-
-
- //global variables
-
+app.use(flash());
+//global variables
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.errors_msg = req.flash('errors_msg');
+next();
+})
  //rutes
 app.use(require('./routes/index'));
 app.use(require('./routes/note'));
